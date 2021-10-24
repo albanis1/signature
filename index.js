@@ -7,6 +7,7 @@ var nodemailer = require('nodemailer');
 const app = express();
 const config = require('./config/config');
 
+const port = process.env.PORT || 5000;
 app.use(bodyParse.urlencoded({extended: true}));
 app.use(bodyParse.json());
 app.use(cookieParser());
@@ -31,6 +32,6 @@ app.post("/api/send", (req,res) => {
     });  
 });
 
-app.listen(5000, () => {
-    console.log('Server running at 5000');
+app.listen(port, () => {
+    console.log('Server running at '+ port);
 })
