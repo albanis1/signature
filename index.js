@@ -40,7 +40,7 @@ app.post("/api/send", async (req,res) => {
     });
     
     var mailOptions = {
-      from: 'info.sigit@gmail.com',
+      from: email,
       to: 'muhammadsigit330@gmail.com',
       subject: subjectEmail,
       text: messageEmail
