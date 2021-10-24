@@ -28,12 +28,15 @@ app.post("/api/send", async (req,res) => {
     const accessToken = await oAuth2Client.getAccessToken();
 
     var transporter = nodemailer.createTransport({
-      type: 'OAuth2',
-      user: 'info.sigit1@gmail.com',
-      clientId: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-      refreshToken: REFRESH_TOKEN,
-      accessToken: accessToken
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: 'info.sigit1@gmail.com',
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken
+      }
     });
     
     var mailOptions = {
