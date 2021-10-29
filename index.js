@@ -82,10 +82,7 @@ app.get("/api/signature", (req, res) => {
   const { apiKey, secretKey } = getESBCONFIG();
 
   const headers = {
-    'content-type': 'application/json',
-    'api_key': apiKey,
-    'x-signature': createEsbSignature(apiKey, secretKey),
-    'curl': ''
+    'x-signature': createEsbSignature(apiKey, secretKey)
   };
 
   res.send(BaseResponse.successResponse(headers));
