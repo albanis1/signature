@@ -62,7 +62,7 @@ app.post("/api/send", async (req,res) => {
 
 
 const getESBCONFIG = () => {
-  return { apiKey: '', secretKey: '' };
+  return { apiKey: 'hvnvdm29rexr4dkcgfspvy6x', secretKey: 'fyURgpkUeR' };
 }
 
 const createEsbSignature = (apiKey, secretKey) => {
