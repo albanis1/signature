@@ -75,16 +75,17 @@ const createEsbSignature = (apiKey, secretKey) => {
 };
 
 app.get("/api/signature", (req, res) => {
-  const { user } = req.params;
+  const { user = '' } = req.query;
 
-  if (isEmpty(user))  res.send(BaseResponse.errorResponse('user not found'));
+  if (user !== 'MEA')  res.send(BaseResponse.errorResponse('user not found'));
 
   const { apiKey, secretKey } = getESBCONFIG();
 
   const headers = {
     'content-type': 'application/json',
     'api_key': apiKey,
-    'x-signature': createEsbSignature(apiKey, secretKey)
+    'x-signature': createEsbSignature(apiKey, secretKey),
+    'curl': ''
   };
 
   res.send(BaseResponse.successResponse(headers));
