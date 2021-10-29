@@ -8,6 +8,8 @@ var nodemailer = require('nodemailer');
 const app = express();
 const config = require('./config/config');
 
+const crypto = require('crypto');
+
 const port = process.env.PORT || 5000;
 app.use(bodyParse.urlencoded({extended: true}));
 app.use(bodyParse.json());
@@ -57,6 +59,36 @@ app.post("/api/send", async (req,res) => {
     res.send(BaseResponse.errorResponse(error));
   }
 });
+
+
+const getESBCONFIG = () => {
+  return { apiKey: '', secretKey: '' };
+}
+
+const createEsbSignature = (apiKey, secretKey) => {
+  const algorithm = 'md5';
+  const timestamp = Math.round((new Date()).getTime() / 1000);
+  const pattern = apiKey + secretKey + timestamp;
+
+  const hash = crypto.createHash(algorithm).update(pattern).digest('hex');
+  return hash;
+};
+
+app.get("/api/signature", async (req, res)) => {
+  const { user } = req.params;
+
+  if (isEmpty(user))  res.send(BaseResponse.errorResponse('user not found'));
+
+  const { apiKey, secretKey } = getESBCONFIG();
+
+  const headers = {
+    'content-type': 'application/json',
+    'api_key': apiKey,
+    'x-signature': createEsbSignature(apiKey, secretKey)
+  };
+
+  res.send(BaseResponse.successResponse(headers));
+}
 
 app.listen(port, () => {
     console.log('Server running at '+ port);
