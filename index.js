@@ -74,7 +74,7 @@ const createEsbSignature = (apiKey, secretKey) => {
   return hash;
 };
 
-app.get("/api/signature", async (req, res)) => {
+app.get("/api/signature", (req, res) => {
   const { user } = req.params;
 
   if (isEmpty(user))  res.send(BaseResponse.errorResponse('user not found'));
@@ -88,7 +88,7 @@ app.get("/api/signature", async (req, res)) => {
   };
 
   res.send(BaseResponse.successResponse(headers));
-}
+});
 
 app.listen(port, () => {
     console.log('Server running at '+ port);
