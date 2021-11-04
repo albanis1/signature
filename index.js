@@ -88,18 +88,23 @@ const createCPQSignature = (apiKey, secretKey) => {
 app.get("/api/signature", (req, res) => {
   const { user = '' } = req.query;
   let data = null;
+  let theApiKey = null;
+  let theSecretKey = null
   switch (user) {
     case 'MEA':
       const { apiKey, secretKey } = getESBCONFIG();
+      theApiKey = getESBCONFIG().apiKey;
+      theSecretKey = getESBCONFIG().secretKey;
       data = {
-        'x-signature': createEsbSignature(apiKey, secretKey)
+        'x-signature': createEsbSignature(theApiKey, theSecretKey)
       };
       break;
     case 'CPQ':
-      const { apiKey, secretKey } = getCPQCONFIG();
+      theApiKey = getCPQCONFIG().apiKey;
+      theSecretKey = getCPQCONFIG().secretKey;
       data = {
         'channel': 'MEA',
-        'x-signature': createCPQSignature(apiKey, secretKey)
+        'x-signature': createCPQSignature(theApiKey, theSecretKey)
       };
     default:
       data = {'data': 'notfound'};
