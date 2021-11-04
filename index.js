@@ -90,7 +90,7 @@ app.get("/api/signature", (req, res) => {
   let data = null;
   let theApiKey = null;
   let theSecretKey = null
-  if (user === ' MEA') {
+  if (user === 'MEA') {
     theApiKey = getESBCONFIG().apiKey;
     theSecretKey = getESBCONFIG().secretKey;
     data = {
