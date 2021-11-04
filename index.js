@@ -92,13 +92,11 @@ app.get("/api/signature", (req, res) => {
   let theSecretKey = null
   switch (user) {
     case 'MEA':
-      const { apiKey, secretKey } = getESBCONFIG();
       theApiKey = getESBCONFIG().apiKey;
       theSecretKey = getESBCONFIG().secretKey;
       data = {
         'x-signature': createEsbSignature(theApiKey, theSecretKey)
       };
-      break;
     case 'CPQ':
       theApiKey = getCPQCONFIG().apiKey;
       theSecretKey = getCPQCONFIG().secretKey;
