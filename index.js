@@ -7,6 +7,7 @@ const BaseResponse = require('./Response/BaseResponse');
 var nodemailer = require('nodemailer');
 const app = express();
 const config = require('./config/config');
+const MD5 = require('blueimp-md5');
 
 const crypto = require('crypto');
 
@@ -65,6 +66,10 @@ const getESBCONFIG = () => {
   return { apiKey: 'hvnvdm29rexr4dkcgfspvy6x', secretKey: 'fyURgpkUeR' };
 }
 
+const getCPQCONFIG = () => {
+  return { apiKey: '4d1bb6e3d0094890', secretKey: 'f8b9a9c13a3f4912b866ef041ce3ddf9' };
+}
+
 const createEsbSignature = (apiKey, secretKey) => {
   const algorithm = 'md5';
   const timestamp = Math.round((new Date()).getTime() / 1000);
@@ -74,18 +79,33 @@ const createEsbSignature = (apiKey, secretKey) => {
   return hash;
 };
 
+const createCPQSignature = (apiKey, secretKey) => {
+  const timestamp = Math.floor(Date.now() / 1000);
+  const signature = MD5(apiKey + secretKey + timestamp);
+  return signature;
+};
+
 app.get("/api/signature", (req, res) => {
   const { user = '' } = req.query;
-
-  if (user !== 'MEA')  res.send(BaseResponse.errorResponse('user not found'));
-
-  const { apiKey, secretKey } = getESBCONFIG();
-
-  const headers = {
-    'x-signature': createEsbSignature(apiKey, secretKey)
-  };
-
-  res.send(BaseResponse.successResponse(headers));
+  let data = null;
+  switch (user) {
+    case 'MEA':
+      const { apiKey, secretKey } = getESBCONFIG();
+      data = {
+        'x-signature': createEsbSignature(apiKey, secretKey)
+      };
+      break;
+    case 'CPQ':
+      const { apiKey, secretKey } = getCPQCONFIG();
+      data = {
+        'channel': 'MEA',
+        'x-signature': createCPQSignature(apiKey, secretKey)
+      };
+    default:
+      data = {'data': 'notfound'};
+      break;
+  }
+  res.send(BaseResponse.successResponse(data));
 });
 
 app.listen(port, () => {
