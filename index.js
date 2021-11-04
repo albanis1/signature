@@ -90,23 +90,21 @@ app.get("/api/signature", (req, res) => {
   let data = null;
   let theApiKey = null;
   let theSecretKey = null
-  switch (user) {
-    case 'MEA':
-      theApiKey = getESBCONFIG().apiKey;
-      theSecretKey = getESBCONFIG().secretKey;
-      data = {
-        'x-signature': createEsbSignature(theApiKey, theSecretKey)
-      };
-    case 'CPQ':
-      theApiKey = getCPQCONFIG().apiKey;
-      theSecretKey = getCPQCONFIG().secretKey;
-      data = {
-        'channel': 'MEA',
-        'x-signature': createCPQSignature(theApiKey, theSecretKey)
-      };
-    default:
-      data = {'data': 'notfound'};
-      break;
+  if (user === ' MEA') {
+    theApiKey = getESBCONFIG().apiKey;
+    theSecretKey = getESBCONFIG().secretKey;
+    data = {
+      'x-signature': createEsbSignature(theApiKey, theSecretKey)
+    };
+  } else if (user === 'CPQ') {
+    theApiKey = getCPQCONFIG().apiKey;
+    theSecretKey = getCPQCONFIG().secretKey;
+    data = {
+      'channel': 'MEA',
+      'x-signature': createCPQSignature(theApiKey, theSecretKey)
+    };
+  } else {
+    data = {'data': 'notfound'};
   }
   res.send(BaseResponse.successResponse(data));
 });
