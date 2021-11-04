@@ -80,9 +80,12 @@ const createEsbSignature = (apiKey, secretKey) => {
 };
 
 const createCPQSignature = (apiKey, secretKey) => {
+  const algorithm = 'md5';
   const timestamp = Math.floor(Date.now() / 1000);
-  const signature = MD5(apiKey + secretKey + timestamp);
-  return signature;
+  const pattern = apiKey + secretKey + timestamp;
+  
+  const hash = crypto.createHash(algorithm).update(pattern).digest('hex');
+  return hash;
 };
 
 app.get("/api/signature", (req, res) => {
