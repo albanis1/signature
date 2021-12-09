@@ -66,6 +66,10 @@ const getESBCONFIG = () => {
   return { apiKey: 'hvnvdm29rexr4dkcgfspvy6x', secretKey: 'fyURgpkUeR' };
 }
 
+const getESBCONFIGPreprod = () => {
+  return { apiKey: 'b5cr3btxhquan6rremvknz6t', secretKey: 'RxYhgR2kma' };
+}
+
 const getCPQCONFIG = () => {
   return { apiKey: '4d1bb6e3d0094890', secretKey: 'f8b9a9c13a3f4912b866ef041ce3ddf9' };
 }
@@ -94,8 +98,8 @@ app.get("/api/signature", (req, res) => {
   let theApiKey = null;
   let theSecretKey = null
   if (user === 'MEA') {
-    theApiKey = getESBCONFIG().apiKey;
-    theSecretKey = getESBCONFIG().secretKey;
+    theApiKey = getESBCONFIGPreprod().apiKey;
+    theSecretKey = getESBCONFIGPreprod().secretKey;
     data = {
       'x-signature': createEsbSignature(theApiKey, theSecretKey)
     };
