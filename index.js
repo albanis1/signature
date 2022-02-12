@@ -8,6 +8,7 @@ var nodemailer = require('nodemailer');
 const app = express();
 const config = require('./config/config');
 const MD5 = require('blueimp-md5');
+const Moment = require('moment');
 
 const crypto = require('crypto');
 
@@ -89,6 +90,12 @@ const createEsbSignature = (apiKey, secretKey) => {
   return hash;
 };
 
+const createTransactionId = (appId) => {
+  const timeStamp = Moment().format('YYMMDDHHmmssSSS');
+  const changeableDigit = '0';
+  return [appId, timeStamp, changeableDigit].join('');
+}
+
 const createCPQSignature = (apiKey, secretKey) => {
   const algorithm = 'md5';
   const timestamp = Math.round((new Date()).getTime() / 1000);
@@ -109,21 +116,25 @@ app.get("/api/signature", (req, res) => {
     theSecretKey = getESBCONFIGPreprod().secretKey;
     data = {
       'channel' : 'MEA',
-      'x-signature': createEsbSignature(theApiKey, theSecretKey)
+      'x-signature': createEsbSignature(theApiKey, theSecretKey),
+      'transaction-id' : createTransactionId('DSC')
     };
   } else if (user === 'CPQ') {
     theApiKey = getCPQCONFIG().apiKey;
     theSecretKey = getCPQCONFIG().secretKey;
     data = {
       'channel': 'CPQ',
-      'x-signature': createCPQSignature(theApiKey, theSecretKey)
+      'x-signature': createCPQSignature(theApiKey, theSecretKey),
+      'transaction-id' : createTransactionId('DSC')
     };
   } else if (user === 'MEC') {
     theApiKey = getMECCONFIG().apiKey;
     theSecretKey = getMECCONFIG().secretKey;
     data = {
       'channel': 'MEC',
-      'x-signature': createCPQSignature(theApiKey, theSecretKey)
+      'x-signature': createCPQSignature(theApiKey, theSecretKey),
+      'transaction-id' : createTransactionId('DSC'),
+      'bookingPayment': 'bookingPayment-' + new Date().getTime()
     };
   } else {
     data = {'data': 'notfound'};
