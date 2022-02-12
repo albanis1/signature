@@ -67,11 +67,17 @@ const getESBCONFIG = () => {
 }
 
 const getESBCONFIGPreprod = () => {
-  return { apiKey: 'b5cr3btxhquan6rremvknz6t', secretKey: 'RxYhgR2kma' };
+  return { apiKey: 'hvnvdm29rexr4dkcgfspvy6x', secretKey: 'fyURgpkUeR' };
 }
 
 const getCPQCONFIG = () => {
   return { apiKey: '4d1bb6e3d0094890', secretKey: 'f8b9a9c13a3f4912b866ef041ce3ddf9' };
+}
+
+const getMECCONFIG = () => {
+  const apiKey = '2vmxxf2w4785ub2h5e9ytfbn';
+  const secretKey = 'k7R4BWkAww';
+  return {apiKey, secretKey};
 }
 
 const createEsbSignature = (apiKey, secretKey) => {
@@ -85,12 +91,13 @@ const createEsbSignature = (apiKey, secretKey) => {
 
 const createCPQSignature = (apiKey, secretKey) => {
   const algorithm = 'md5';
-  const timestamp = Math.floor(Date.now() / 1000);
+  const timestamp = Math.round((new Date()).getTime() / 1000);
   const pattern = apiKey + secretKey + timestamp;
-  
+
   const hash = crypto.createHash(algorithm).update(pattern).digest('hex');
   return hash;
 };
+// curl -X POST --header 'Accept: application/json' --header 'Content-Type: application/json' --header 'api_key: 2vmxxf2w4785ub2h5e9ytfbn' --header 'x-signature: 5efa37c2cd197bc987cba5d1605ef6d0' --data '{"transaction":{"transaction_id":"DSC2111021412331370","channel":"a8"},"payment":{"channel_trx_id":"bookingPayment-1635837153137","id_number":"CIS-1522","code":"62823234565555500574","description":"Payment","source_account_number":"8029210929151101","destination_account_number":"6200000000005","amount":"273396638"}}' 'https://api.digitalcore.telkomsel.co.id/scrt/esb/v1/virtual-account/pay' -vik
 
 app.get("/api/signature", (req, res) => {
   const { user = '' } = req.query;
@@ -101,13 +108,21 @@ app.get("/api/signature", (req, res) => {
     theApiKey = getESBCONFIGPreprod().apiKey;
     theSecretKey = getESBCONFIGPreprod().secretKey;
     data = {
+      'channel' : 'MEA',
       'x-signature': createEsbSignature(theApiKey, theSecretKey)
     };
   } else if (user === 'CPQ') {
     theApiKey = getCPQCONFIG().apiKey;
     theSecretKey = getCPQCONFIG().secretKey;
     data = {
-      'channel': 'MEA',
+      'channel': 'CPQ',
+      'x-signature': createCPQSignature(theApiKey, theSecretKey)
+    };
+  } else if (user === 'MEC') {
+    theApiKey = getMECCONFIG().apiKey;
+    theSecretKey = getMECCONFIG().secretKey;
+    data = {
+      'channel': 'MEC',
       'x-signature': createCPQSignature(theApiKey, theSecretKey)
     };
   } else {
