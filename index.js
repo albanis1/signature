@@ -68,8 +68,21 @@ const getESBCONFIG = () => {
 }
 
 const getESBCONFIGPreprod = () => {
-  return { apiKey: '85xu3zsymj69k84b8e7pxv2m', secretKey: '9jZRFNjEXc' };
+  return { apiKey: 'azm637xxzuemy34cqj8qjgp9', secretKey: 'geAadkPurK' };
 }
+
+/*
+
+api safora : azm637xxzuemy34cqj8qjgp9
+secrete key safora : geAadkPurK
+
+api MEA : b5cr3btxhquan6rremvknz6t
+secrete key MEA : RxYhgR2kma
+
+api MEC : 85xu3zsymj69k84b8e7pxv2m
+secrete key MEC : 9jZRFNjEXc
+
+*/
 
 const getCPQCONFIG = () => {
   return { apiKey: '4d1bb6e3d0094890', secretKey: 'f8b9a9c13a3f4912b866ef041ce3ddf9' };
@@ -95,6 +108,15 @@ const createTransactionId = (appId) => {
   const changeableDigit = '0';
   return [appId, timeStamp, changeableDigit].join('');
 }
+
+const createSaforaSignature = (apiKey, secretKey) => {
+  const algorithm = 'md5';
+  const timestamp = Math.round((new Date()).getTime() / 1000);
+  const pattern = apiKey + secretKey + timestamp;
+
+  const hash = crypto.createHash(algorithm).update(pattern).digest('hex');
+  return hash;
+};
 
 const createCPQSignature = (apiKey, secretKey) => {
   const algorithm = 'md5';
@@ -137,7 +159,14 @@ app.get("/api/signature", (req, res) => {
       'bookingPayment': 'bookingPayment-' + new Date().getTime()
     };
   } else {
-    data = {'data': 'notfound'};
+    theApiKey = getMECCONFIG().apiKey;
+    theSecretKey = getMECCONFIG().secretKey;
+    data = {
+      'channel': 'SAFORA',
+      'x-signature': createCPQSignature(theApiKey, theSecretKey),
+      'transaction-id' : createTransactionId('DSC'),
+      'bookingPayment': 'bookingPayment-' + new Date().getTime()
+    };
   }
   res.send(BaseResponse.successResponse(data));
 });
