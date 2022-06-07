@@ -68,7 +68,7 @@ const getESBCONFIG = () => {
 }
 
 const getESBCONFIGPreprod = () => {
-  return { apiKey: 'azm637xxzuemy34cqj8qjgp9', secretKey: 'geAadkPurK' };
+  return { apiKey: '85xu3zsymj69k84b8e7pxv2m', secretKey: '9jZRFNjEXc' };
 }
 
 /*
