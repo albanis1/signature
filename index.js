@@ -71,6 +71,14 @@ const getESBCONFIGPreprod = () => {
   return { apiKey: 'b5cr3btxhquan6rremvknz6t', secretKey: 'RxYhgR2kma' };
 }
 
+const getESBCONFIGPreprodMEC = () => {
+  return { apiKey: '85xu3zsymj69k84b8e7pxv2m', secretKey: '9jZRFNjEXc' };
+}
+
+const getESBCONFIGPreprodSFA = () => {
+  return { apiKey: 'azm637xxzuemy34cqj8qjgp9', secretKey: 'geAadkPurK' };
+}
+
 /*
 
 api safora : azm637xxzuemy34cqj8qjgp9
@@ -150,22 +158,20 @@ app.get("/api/signature", (req, res) => {
       'transaction-id' : createTransactionId('DSC')
     };
   } else if (user === 'MEC') {
-    theApiKey = getMECCONFIG().apiKey;
-    theSecretKey = getMECCONFIG().secretKey;
+    theApiKey = getESBCONFIGPreprodMEC().apiKey;
+    theSecretKey = getESBCONFIGPreprodMEC().secretKey;
     data = {
-      'channel': 'MEC',
-      'x-signature': createCPQSignature(theApiKey, theSecretKey),
-      'transaction-id' : createTransactionId('DSC'),
-      'bookingPayment': 'bookingPayment-' + new Date().getTime()
+      'channel' : 'MEC',
+      'x-signature': createEsbSignature(theApiKey, theSecretKey),
+      'transaction-id' : createTransactionId('DSC')
     };
   } else {
-    theApiKey = getMECCONFIG().apiKey;
-    theSecretKey = getMECCONFIG().secretKey;
+    theApiKey = getESBCONFIGPreprodSFA().apiKey;
+    theSecretKey = getESBCONFIGPreprodSFA().secretKey;
     data = {
-      'channel': 'SAFORA',
-      'x-signature': createCPQSignature(theApiKey, theSecretKey),
-      'transaction-id' : createTransactionId('DSC'),
-      'bookingPayment': 'bookingPayment-' + new Date().getTime()
+      'channel' : 'SFA',
+      'x-signature': createEsbSignature(theApiKey, theSecretKey),
+      'transaction-id' : createTransactionId('DSC')
     };
   }
   res.send(BaseResponse.successResponse(data));
