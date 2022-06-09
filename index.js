@@ -171,7 +171,7 @@ app.get("/api/signature", (req, res) => {
     data = {
       'channel' : 'SFA',
       'x-signature': createEsbSignature(theApiKey, theSecretKey),
-      'transaction-id' : createTransactionId('DSC')
+      'transaction-id' : createTransactionId('SFA')
     };
   }
   res.send(BaseResponse.successResponse(data));
