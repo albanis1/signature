@@ -158,12 +158,13 @@ app.get("/api/signature", (req, res) => {
       'transaction-id' : createTransactionId('DSC')
     };
   } else if (user === 'MEC') {
-    theApiKey = getESBCONFIGPreprodMEC().apiKey;
-    theSecretKey = getESBCONFIGPreprodMEC().secretKey;
+    theApiKey = getMECCONFIG().apiKey;
+    theSecretKey = getMECCONFIG().secretKey;
     data = {
       'channel' : 'MEC',
       'x-signature': createEsbSignature(theApiKey, theSecretKey),
-      'transaction-id' : createTransactionId('DSC')
+      'transaction-id' : createTransactionId('DSC'),
+      'bookpyamentTrcId': 'bookingPayment-' + new Date().getTime()
     };
   } else {
     theApiKey = getESBCONFIGPreprodSFA().apiKey;
