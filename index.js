@@ -158,8 +158,11 @@ app.get("/api/signature", (req, res) => {
       'transaction-id' : createTransactionId('DSC')
     };
   } else if (user === 'MEC') {
-    theApiKey = getMECCONFIG().apiKey;
-    theSecretKey = getMECCONFIG().secretKey;
+    // theApiKey = getMECCONFIG().apiKey;
+    // theSecretKey = getMECCONFIG().secretKey;
+    theApiKey = getESBCONFIGPreprodMEC().apiKey;
+    theSecretKey = getESBCONFIGPreprodMEC().secretKey;
+    
     data = {
       'channel' : 'MEC',
       'x-signature': createEsbSignature(theApiKey, theSecretKey),
