@@ -79,6 +79,11 @@ const getESBCONFIGPreprodSFA = () => {
   return { apiKey: 'azm637xxzuemy34cqj8qjgp9', secretKey: 'geAadkPurK' };
 }
 
+const getESBCONFIGProdSFA = () => {
+  return { apiKey: 't3aduj7dyyycj9cgxvqxpeyf', secretKey: '5E6EgUAkq2' };
+}
+
+
 /*
 
 api safora : azm637xxzuemy34cqj8qjgp9
@@ -137,7 +142,7 @@ const createCPQSignature = (apiKey, secretKey) => {
 // curl -X POST --header 'Accept: application/json' --header 'Content-Type: application/json' --header 'api_key: 2vmxxf2w4785ub2h5e9ytfbn' --header 'x-signature: 5efa37c2cd197bc987cba5d1605ef6d0' --data '{"transaction":{"transaction_id":"DSC2111021412331370","channel":"a8"},"payment":{"channel_trx_id":"bookingPayment-1635837153137","id_number":"CIS-1522","code":"62823234565555500574","description":"Payment","source_account_number":"8029210929151101","destination_account_number":"6200000000005","amount":"273396638"}}' 'https://api.digitalcore.telkomsel.co.id/scrt/esb/v1/virtual-account/pay' -vik
 
 app.get("/api/signature", (req, res) => {
-  const { user = '' } = req.query;
+  const { user = '', isProd = false } = req.query;
   let data = null;
   let theApiKey = null;
   let theSecretKey = null
@@ -172,6 +177,11 @@ app.get("/api/signature", (req, res) => {
   } else {
     theApiKey = getESBCONFIGPreprodSFA().apiKey;
     theSecretKey = getESBCONFIGPreprodSFA().secretKey;
+    if (isProd) {
+      theApiKey = getESBCONFIGProdSFA().apiKey;
+      theSecretKey = getESBCONFIGProdSFA().secretKey;
+    }
+    
     data = {
       'channel' : 'SFA',
       'x-signature': createEsbSignature(theApiKey, theSecretKey),
