@@ -72,7 +72,7 @@ const getESBCONFIGPreprod = () => {
 }
 
 const getESBCONFIGPreprodMEC = () => {
-  return { apiKey: '85xu3zsymj69k84b8e7pxv2m', secretKey: '9jZRFNjEXc' };
+  return { apiKey: '83xpc4s93mv4yhntcgutvdhv', secretKey: '3orVbu1kYF' };
 }
 
 const getESBCONFIGPreprodSFA = () => {
