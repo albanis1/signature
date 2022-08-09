@@ -107,6 +107,12 @@ const getMECCONFIG = () => {
   return {apiKey, secretKey};
 }
 
+const getMECCONFIGProd = () => {
+  const apiKey = '2vmxxf2w4785ub2h5e9ytfbn';
+  const secretKey = 'k7R4BWkAww';
+  return {apiKey, secretKey};
+}
+
 const createEsbSignature = (apiKey, secretKey) => {
   const algorithm = 'md5';
   const timestamp = Math.round((new Date()).getTime() / 1000);
@@ -167,6 +173,10 @@ app.get("/api/signature", (req, res) => {
     theSecretKey = getMECCONFIG().secretKey;
     // theApiKey = getESBCONFIGPreprodMEC().apiKey;
     // theSecretKey = getESBCONFIGPreprodMEC().secretKey;
+    if (isProd) {
+      theApiKey = getMECCONFIGProd().apiKey;
+      theSecretKey = getMECCONFIGProd().secretKey;
+    }
     
     data = {
       'channel' : 'MEC',
