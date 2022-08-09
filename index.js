@@ -102,8 +102,8 @@ const getCPQCONFIG = () => {
 }
 
 const getMECCONFIG = () => {
-  const apiKey = '2vmxxf2w4785ub2h5e9ytfbn';
-  const secretKey = 'k7R4BWkAww';
+  const apiKey = '85xu3zsymj69k84b8e7pxv2m';
+  const secretKey = '9jZRFNjEXc';
   return {apiKey, secretKey};
 }
 
