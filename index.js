@@ -155,6 +155,10 @@ app.get("/api/signature", (req, res) => {
   if (user === 'MEA') {
     theApiKey = getESBCONFIGPreprod().apiKey;
     theSecretKey = getESBCONFIGPreprod().secretKey;
+    if (isProd) {
+      theApiKey = getESBCONFIG().apiKey;
+      theSecretKey = getESBCONFIG().secretKey;
+    }
     data = {
       'channel' : 'MEA',
       'x-signature': createEsbSignature(theApiKey, theSecretKey),
