@@ -105,17 +105,17 @@ const getCPQCONFIG = () => {
 // #ESB_DIGICARE_API_KEY=83xpc4s93mv4yhntcgutvdhv
 // #ESB_DIGICARE_SECRET_KEY=3orVbu1kYF
 
-// const getMECCONFIG = () => {
-//   const apiKey = '85xu3zsymj69k84b8e7pxv2m';
-//   const secretKey = '9jZRFNjEXc';
-//   return {apiKey, secretKey};
-// }
-
 const getMECCONFIG = () => {
-  const apiKey = '83xpc4s93mv4yhntcgutvdhv';
-  const secretKey = '3orVbu1kYF';
+  const apiKey = '85xu3zsymj69k84b8e7pxv2m';
+  const secretKey = '9jZRFNjEXc';
   return {apiKey, secretKey};
 }
+
+// const getMECCONFIG = () => {
+//   const apiKey = '83xpc4s93mv4yhntcgutvdhv';
+//   const secretKey = '3orVbu1kYF';
+//   return {apiKey, secretKey};
+// }
 
 
 const getMECCONFIGProd = () => {
