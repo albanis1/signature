@@ -1,0 +1,27 @@
+{
+    "transaction": {
+        "transaction_id": "DSC2212151502189380",
+        "channel": "a8",
+        "status_code": "00000",
+        "status_desc": "Success"
+    },
+    "payment_history": [
+        {
+            "project_id": "MV-192",
+            "virtual_account_number": "8029210917083304",
+            "code": "62823234565555502319",
+            "amount": 445886,
+            "amount_success": 401699.1,
+            "amount_failed": 0,
+            "count_success": 4,
+            "count_failed": 0,
+            "booked_id": "DSC2212011608134960",
+            "booked_by": "PGDSC",
+            "booked_date": "2022-12-01 16:09:13.044",
+            "tax_id": "001300624948",
+            "tax_amount": 44186.9,
+            "status": 4,
+            "status_description": "Complete"
+        }
+    ]
+}

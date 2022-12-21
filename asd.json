@@ -1,0 +1,16 @@
+6281399818030 UPS Display 
+
+Postpaid : 628114706999
+Prepaid : 6281399818030
+
+TCSI :
+curl -X GET --header 'Content-Type: application/json' --header 'api_key: hvnvdm29rexr4dkcgfspvy6x' --header 'x-signature:ea2906f85c93f71837ac6ad1b75e604e' 'https://api.digitalcore.telkomsel.co.id/scrt/sz/ups/info-ls?oprid=lstcsi2&msisdn=628114706999&show=TCSI' -vik
+
+OCSI : 
+curl -X GET --header 'Content-Type: application/json' --header 'api_key: hvnvdm29rexr4dkcgfspvy6x' --header 'x-signature:ea2906f85c93f71837ac6ad1b75e604e' 'https://api.digitalcore.telkomsel.co.id/scrt/sz/ups/info-ls?oprid=lstcsi2&msisdn=628114706999&show=OCSI' -vik
+
+SMSCSI :
+curl -X GET --header 'Content-Type: application/json' --header 'api_key: hvnvdm29rexr4dkcgfspvy6x' --header 'x-signature:ea2906f85c93f71837ac6ad1b75e604e' 'https://api.digitalcore.telkomsel.co.id/scrt/sz/ups/info-ls?oprid=lstcsi2&msisdn=628114706999&show=SMSCSI' -vik
+
+MCSI : RO:31108
+curl -X GET --header 'Content-Type: application/json' --header 'api_key: hvnvdm29rexr4dkcgfspvy6x' --header 'x-signature:ea2906f85c93f71837ac6ad1b75e604e' 'https://api.digitalcore.telkomsel.co.id/scrt/sz/ups/info-ls?oprid=lstcsi2&msisdn=628114706999&show=MCSI' -vik
